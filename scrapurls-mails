@@ -1,0 +1,38 @@
+import urllib.request
+from bs4 import BeautifulSoup
+
+Wiki = "https://www.jnec.org/contact.php"
+
+page = urllib.request.urlopen(Wiki)
+
+soup  = BeautifulSoup(page, features='html.parser')
+print("\n\nPage Scrapped ...\n\n")
+print("\n\n Tittle of the page\n\n")
+
+print(soup.title.string)
+
+print("\n\n All the urls in the web page \n\n")
+
+all_links =soup.find_all('a')
+
+print('total nummber of urls present= ',len(all_links))
+
+print('\n\n last 5 urls in the page\n')
+emails = []
+
+if len(all_links) > 5:
+        last_5 = all_links[len(all_links)-5:]
+        for url in last_5 :
+             print(url.get('href'))
+for url in all_links:
+    if(str(url.get("href")).find('@')>0):
+             emails.append(url.get('href'))
+
+print('\n\n Toal number of emails :',len(emails))
+
+print("\n\n some of the emails are:\n\n")
+
+for email in emails[:5]:
+    print(email)
+
+
